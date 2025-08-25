@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#version .2
+
 # Check if the current user is a sudoer
 if sudo -n true 2>/dev/null; then
     echo "---------User is a sudoer. Running privileged commands..."
@@ -23,6 +25,7 @@ cat /etc/issue
 uname -a
 
 echo "---------Passwd file"
+ls -la /etc/passwd
 cat /etc/passwd
 
 echo "---------shadow file"
@@ -90,17 +93,3 @@ echo "---------Gathering kernel and architecture information"
 uname -r
 
 arch
-
-
-
-
-
-
-
-
-
-
-
-
-
-
