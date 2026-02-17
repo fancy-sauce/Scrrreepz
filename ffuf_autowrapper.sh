@@ -1,8 +1,6 @@
 #!/bin/bash
 
-# ==============================
-# Configurable Variables
-# ==============================
+# Takes input file named urls.txt and runs ffuf against them.
 
 WORDLIST="/usr/share/wordlists/seclists/Discovery/Web-Content/big.txt"
 #EXTENSIONS="php,txt,html,bak"
@@ -10,9 +8,6 @@ THREADS=40
 MATCH_CODES="200,204,301,302,307,401,403"
 OUTPUT_DIR="ffuf_results"
 
-# ==============================
-# Safety Checks
-# ==============================
 
 if [ ! -f "urls.txt" ]; then
     echo "urls.txt not found."
@@ -26,17 +21,11 @@ fi
 
 mkdir -p "$OUTPUT_DIR"
 
-# ==============================
-# Helper: Sanitize folder name
-# ==============================
 
 sanitize() {
     echo "$1" | sed 's|https\?://||' | sed 's|[^a-zA-Z0-9]|_|g'
 }
 
-# ==============================
-# Main Loop
-# ==============================
 
 while read -r url; do
     [ -z "$url" ] && continue
@@ -46,9 +35,9 @@ while read -r url; do
 
     mkdir -p "$target_dir"
 
-    echo "===================================="
+
     echo "[*] Running ffuf against $url"
-    echo "===================================="
+
 
     ffuf -u "$url/FUZZ" \
          -w "$WORDLIST" \
@@ -62,4 +51,4 @@ while read -r url; do
 
 done < urls.txt
 
-echo "Batch scan complete."
+echo "The FFUFING is complete!"
